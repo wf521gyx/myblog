@@ -14,6 +14,13 @@
 
 
 
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-mac-osx.min.css?v=1.0.2" rel="stylesheet">
+
 
 
 
@@ -145,7 +152,7 @@
 
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
-	
+
 			<!--右上角git猫咪样式：http://tholman.com/github-corners/参考网站-->
 		<a href="http://ourloverstory.vip/" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#fff; color:#151513; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true">
 		<path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -535,6 +542,9 @@
 
 
 
+  
+  
+
 
 
   
@@ -587,6 +597,11 @@
   
   
     <script type="text/javascript" src="/lib/three/three.min.js"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/three/three-waves.min.js"></script>
   
 
   
@@ -686,7 +701,40 @@
 
   
 
+
+<!-- 点击彩色爆炸效果 -->
+  
 <script src="/live2dw/lib/L2Dwidget.min.js?0c58a1486de42ac6cc1c59c7d98ae887"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
 <!-- 页面点击小红心 -->
 <script type="text/javascript" src="/js/src/clicklove.js"></script>
+<script type="text/javascript">
+/* 鼠标特效 */
+var a_idx = 0;
+jQuery(document).ready(function($) {
+  $("body").click(function(e) {
+      var a = new Array("富强", "民主", "文明", "和谐", "自由", "平等", "公正" ,"法治", "爱国", "敬业", "诚信", "友善");
+      var $i = $("<span/>").text(a[a_idx]);
+      a_idx = (a_idx + 1) % a.length;
+      var x = e.pageX,
+      y = e.pageY;
+      $i.css({
+          "z-index": 999999999999999999999999999999999999999999999999999999999999999999999,
+          "top": y - 20,
+          "left": x,
+          "position": "absolute",
+          "font-weight": "bold",
+          "color": "#ff6651"
+      });
+      $("body").append($i);
+      $i.animate({
+          "top": y - 180,
+          "opacity": 0
+      },
+      1500,
+      function() {
+          $i.remove();
+      });
+  });
+});
+   </script>
 </html>
