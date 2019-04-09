@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java基础自学," />
 
 
 
@@ -88,12 +88,13 @@
 
 
 
-<meta name="description" content="主要内容 数据结构 List集合 Set集合 Collections  教学目标  能够说出List集合特点  能够说出常见的数据结构  能够说出数组结构特点  能够说出栈结构特点  能够说出队列结构特点  能够说出单向链表结构特点  能够说出Set集合的特点  能够说出哈希表的特点  使用HashSet集合存储自定义元素  能够说出可变参数的格式  能够使用集合工具类  能够使用Comparat">
+<meta name="description" content="主要内容 数据结构 List集合 Set集合 Collections  第一章 数据结构2.1 数据结构有什么用？当你用着java里面的容器类很爽的时候，你有没有想过，怎么ArrayList就像一个无限扩充的数组，也好像链表之类的。好用吗？好用，这就是数据结构的用处，只不过你在不知不觉中使用了。 现实世界的存储，我们使用的工具和建模。每种数据结构有自己的优点和缺点，想想如果Google的数据用的是">
+<meta name="keywords" content="Java基础自学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="List集合与Set集合的使用">
 <meta property="og:url" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/index.html">
 <meta property="og:site_name" content="Venom">
-<meta property="og:description" content="主要内容 数据结构 List集合 Set集合 Collections  教学目标  能够说出List集合特点  能够说出常见的数据结构  能够说出数组结构特点  能够说出栈结构特点  能够说出队列结构特点  能够说出单向链表结构特点  能够说出Set集合的特点  能够说出哈希表的特点  使用HashSet集合存储自定义元素  能够说出可变参数的格式  能够使用集合工具类  能够使用Comparat">
+<meta property="og:description" content="主要内容 数据结构 List集合 Set集合 Collections  第一章 数据结构2.1 数据结构有什么用？当你用着java里面的容器类很爽的时候，你有没有想过，怎么ArrayList就像一个无限扩充的数组，也好像链表之类的。好用吗？好用，这就是数据结构的用处，只不过你在不知不觉中使用了。 现实世界的存储，我们使用的工具和建模。每种数据结构有自己的优点和缺点，想想如果Google的数据用的是">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/数据结构比喻.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/堆栈.png">
@@ -109,10 +110,10 @@
 <meta property="og:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/双向链表.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/哈希表.png">
 <meta property="og:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/哈希流程图.png">
-<meta property="og:updated_time" content="2019-04-09T05:24:42.175Z">
+<meta property="og:updated_time" content="2019-04-09T05:54:10.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="List集合与Set集合的使用">
-<meta name="twitter:description" content="主要内容 数据结构 List集合 Set集合 Collections  教学目标  能够说出List集合特点  能够说出常见的数据结构  能够说出数组结构特点  能够说出栈结构特点  能够说出队列结构特点  能够说出单向链表结构特点  能够说出Set集合的特点  能够说出哈希表的特点  使用HashSet集合存储自定义元素  能够说出可变参数的格式  能够使用集合工具类  能够使用Comparat">
+<meta name="twitter:description" content="主要内容 数据结构 List集合 Set集合 Collections  第一章 数据结构2.1 数据结构有什么用？当你用着java里面的容器类很爽的时候，你有没有想过，怎么ArrayList就像一个无限扩充的数组，也好像链表之类的。好用吗？好用，这就是数据结构的用处，只不过你在不知不觉中使用了。 现实世界的存储，我们使用的工具和建模。每种数据结构有自己的优点和缺点，想想如果Google的数据用的是">
 <meta name="twitter:image" content="http://yoursite.com/2019/04/09/List集合与Set集合的使用/数据结构比喻.png">
 
 
@@ -389,20 +390,6 @@
 <li>List集合</li>
 <li>Set集合</li>
 <li>Collections</li>
-</ul>
-<h2 id="教学目标"><a href="#教学目标" class="headerlink" title="教学目标"></a>教学目标</h2><ul>
-<li style="list-style: none"><input type="checkbox"> 能够说出List集合特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出常见的数据结构</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出数组结构特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出栈结构特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出队列结构特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出单向链表结构特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出Set集合的特点</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出哈希表的特点</li>
-<li style="list-style: none"><input type="checkbox"> 使用HashSet集合存储自定义元素</li>
-<li style="list-style: none"><input type="checkbox"> 能够说出可变参数的格式</li>
-<li style="list-style: none"><input type="checkbox"> 能够使用集合工具类</li>
-<li style="list-style: none"><input type="checkbox"> 能够使用Comparator比较器进行排序</li>
 </ul>
 <h1 id="第一章-数据结构"><a href="#第一章-数据结构" class="headerlink" title="第一章 数据结构"></a>第一章 数据结构</h1><h2 id="2-1-数据结构有什么用？"><a href="#2-1-数据结构有什么用？" class="headerlink" title="2.1 数据结构有什么用？"></a>2.1 数据结构有什么用？</h2><p>当你用着java里面的容器类很爽的时候，你有没有想过，怎么ArrayList就像一个无限扩充的数组，也好像链表之类的。好用吗？好用，这就是数据结构的用处，只不过你在不知不觉中使用了。</p>
 <p>现实世界的存储，我们使用的工具和建模。每种数据结构有自己的优点和缺点，想想如果Google的数据用的是数组的存储，我们还能方便地查询到所需要的数据吗？而算法，在这么多的数据中如何做到最快的插入，查找，删除，也是在追求更快。</p>
@@ -691,6 +678,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java基础自学/" rel="tag"><i class="fa fa-google"></i>
+
+ Java基础自学</a>
+          
+        </div>
+      
       
       
       
@@ -792,7 +787,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -887,7 +882,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#教学目标"><span class="nav-number">2.</span> <span class="nav-text">教学目标</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-数据结构"><span class="nav-number"></span> <span class="nav-text">第一章 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-数据结构有什么用？"><span class="nav-number">1.</span> <span class="nav-text">2.1 数据结构有什么用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-常见的数据结构"><span class="nav-number">2.</span> <span class="nav-text">2.2 常见的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栈"><span class="nav-number">2.0.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#队列"><span class="nav-number">2.0.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">2.0.3.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表"><span class="nav-number">2.0.4.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#红黑树"><span class="nav-number">2.0.5.</span> <span class="nav-text">红黑树</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-List集合"><span class="nav-number"></span> <span class="nav-text">第二章 List集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-List接口介绍"><span class="nav-number">1.</span> <span class="nav-text">1.1 List接口介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-List接口中常用方法"><span class="nav-number">2.</span> <span class="nav-text">1.2 List接口中常用方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-List的子类"><span class="nav-number"></span> <span class="nav-text">第三章 List的子类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-ArrayList集合"><span class="nav-number">1.</span> <span class="nav-text">3.1 ArrayList集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-LinkedList集合"><span class="nav-number">2.</span> <span class="nav-text">3.2 LinkedList集合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-Set接口"><span class="nav-number"></span> <span class="nav-text">第四章 Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-HashSet集合介绍"><span class="nav-number">1.</span> <span class="nav-text">3.1 HashSet集合介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-HashSet集合存储数据的结构（哈希表）"><span class="nav-number">2.</span> <span class="nav-text">2.2  HashSet集合存储数据的结构（哈希表）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-HashSet存储自定义类型元素"><span class="nav-number">3.</span> <span class="nav-text">2.3  HashSet存储自定义类型元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-LinkedHashSet"><span class="nav-number">4.</span> <span class="nav-text">2.3 LinkedHashSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-9-可变参数"><span class="nav-number">5.</span> <span class="nav-text">1.9  可变参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-Collections"><span class="nav-number"></span> <span class="nav-text">第五章  Collections</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-常用功能"><span class="nav-number">1.</span> <span class="nav-text">2.1 常用功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Comparator比较器"><span class="nav-number">2.</span> <span class="nav-text">2.2 Comparator比较器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-简述Comparable和Comparator两个接口的区别。"><span class="nav-number">3.</span> <span class="nav-text">2.3 简述Comparable和Comparator两个接口的区别。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-练习"><span class="nav-number">4.</span> <span class="nav-text">2.4  练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-扩展"><span class="nav-number">5.</span> <span class="nav-text">2.5 扩展</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#主要内容"><span class="nav-number">1.</span> <span class="nav-text">主要内容</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第一章-数据结构"><span class="nav-number"></span> <span class="nav-text">第一章 数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-数据结构有什么用？"><span class="nav-number">1.</span> <span class="nav-text">2.1 数据结构有什么用？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-常见的数据结构"><span class="nav-number">2.</span> <span class="nav-text">2.2 常见的数据结构</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#栈"><span class="nav-number">2.0.1.</span> <span class="nav-text">栈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#队列"><span class="nav-number">2.0.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数组"><span class="nav-number">2.0.3.</span> <span class="nav-text">数组</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#链表"><span class="nav-number">2.0.4.</span> <span class="nav-text">链表</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#红黑树"><span class="nav-number">2.0.5.</span> <span class="nav-text">红黑树</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第二章-List集合"><span class="nav-number"></span> <span class="nav-text">第二章 List集合</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-List接口介绍"><span class="nav-number">1.</span> <span class="nav-text">1.1 List接口介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-List接口中常用方法"><span class="nav-number">2.</span> <span class="nav-text">1.2 List接口中常用方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第三章-List的子类"><span class="nav-number"></span> <span class="nav-text">第三章 List的子类</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-ArrayList集合"><span class="nav-number">1.</span> <span class="nav-text">3.1 ArrayList集合</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-LinkedList集合"><span class="nav-number">2.</span> <span class="nav-text">3.2 LinkedList集合</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第四章-Set接口"><span class="nav-number"></span> <span class="nav-text">第四章 Set接口</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-HashSet集合介绍"><span class="nav-number">1.</span> <span class="nav-text">3.1 HashSet集合介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-HashSet集合存储数据的结构（哈希表）"><span class="nav-number">2.</span> <span class="nav-text">2.2  HashSet集合存储数据的结构（哈希表）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-HashSet存储自定义类型元素"><span class="nav-number">3.</span> <span class="nav-text">2.3  HashSet存储自定义类型元素</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-LinkedHashSet"><span class="nav-number">4.</span> <span class="nav-text">2.3 LinkedHashSet</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-9-可变参数"><span class="nav-number">5.</span> <span class="nav-text">1.9  可变参数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#第五章-Collections"><span class="nav-number"></span> <span class="nav-text">第五章  Collections</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-常用功能"><span class="nav-number">1.</span> <span class="nav-text">2.1 常用功能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-Comparator比较器"><span class="nav-number">2.</span> <span class="nav-text">2.2 Comparator比较器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3-简述Comparable和Comparator两个接口的区别。"><span class="nav-number">3.</span> <span class="nav-text">2.3 简述Comparable和Comparator两个接口的区别。</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-4-练习"><span class="nav-number">4.</span> <span class="nav-text">2.4  练习</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5-扩展"><span class="nav-number">5.</span> <span class="nav-text">2.5 扩展</span></a></li></ol></div>
             
 
           </div>
@@ -932,7 +927,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共11.9k字</span>
+  <span class="post-count">博客全站共16.5k字</span>
 </div>
 
         
