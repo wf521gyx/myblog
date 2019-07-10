@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-04-09T05:53:07.137Z</updated>
+  <updated>2019-07-10T02:27:50.250Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,65 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>简单查询个人总结</title>
+    <link href="http://yoursite.com/2019/07/10/%E7%AE%80%E5%8D%95%E6%9F%A5%E8%AF%A2%E4%B8%AA%E4%BA%BA%E6%80%BB%E7%BB%93/"/>
+    <id>http://yoursite.com/2019/07/10/简单查询个人总结/</id>
+    <published>2019-07-10T02:15:31.000Z</published>
+    <updated>2019-07-10T02:27:50.250Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h1><ul><li>个人认为直接操作sql效率最高</li><li><p>select t1.* from table t1<br>left join table t2<br>on t1.t1与t2关联的主键=t2.主键<br>left join table t3 on<br>t2.t2与t3关联的主键=t3.主键<br>left join …<br>on …<br>WHERE 1=1<br>and xxxx and xxxx …<br>条件如果为string类型，则判断length是否大于0，来判断是否拼接</p><a id="more"></a><h1 id="简单查询Demo"><a href="#简单查询Demo" class="headerlink" title="简单查询Demo"></a>简单查询Demo</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 督办单简单分页查询</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> findManyTable</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@return</span> 2019年7月4日 by 吴峰</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">findManyTable</span><span class="params">(<span class="keyword">final</span> String supervisionno ,<span class="keyword">final</span> String realname ,<span class="keyword">final</span> String projectname,<span class="keyword">final</span> String addtime,<span class="keyword">final</span> Integer begin,<span class="keyword">final</span> Integer pagesize)</span></span>&#123;</span><br><span class="line"><span class="comment">/*,final Timestamp addtime*/</span></span><br><span class="line"><span class="keyword">return</span> <span class="keyword">this</span>.getHibernateTemplate().execute(</span><br><span class="line"><span class="keyword">new</span> HibernateCallback&lt;List&gt;() &#123;</span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> List <span class="title">doInHibernate</span><span class="params">(Session session)</span> <span class="keyword">throws</span> HibernateException </span>&#123;</span><br><span class="line">StringBuffer sb=<span class="keyword">new</span> StringBuffer();</span><br><span class="line">sb.append(<span class="string">"select ss.* from supervisionsheet ss"</span></span><br><span class="line">+<span class="string">" left join projects pj"</span></span><br><span class="line">+<span class="string">" on pj.projectid=ss.supervisionproject_projectid"</span></span><br><span class="line">+<span class="string">" left join user us"</span></span><br><span class="line">+<span class="string">" on  us.userid=ss.addsupervisionuser_userid"</span></span><br><span class="line">+<span class="string">" left join supervisionsheet ss1"</span></span><br><span class="line">+<span class="string">" on ss.supervisionid=ss1.supervisionid"</span></span><br><span class="line">+<span class="string">" left join supervisionsheet ss2"</span></span><br><span class="line">+<span class="string">" on ss.supervisionid=ss2.supervisionid"</span></span><br><span class="line">+<span class="string">" where 1=1"</span>);</span><br><span class="line"><span class="keyword">if</span>(projectname.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">sb.append(<span class="string">" and pj.projectname='"</span>+projectname+<span class="string">"'"</span>);</span><br><span class="line">System.out.println(<span class="string">"projectname执行了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(realname.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">sb.append(<span class="string">" and us.realname='"</span>+realname+<span class="string">"'"</span>);</span><br><span class="line">System.out.println(<span class="string">"realname执行了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(supervisionno.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">sb.append(<span class="string">" and ss1.supervisionno='"</span>+supervisionno+<span class="string">"'"</span>);</span><br><span class="line">System.out.println(<span class="string">"num执行了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(addtime.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">sb.append(<span class="string">" and DATE_FORMAT(ss2.addtime,'%Y-%m-%d') &gt;= '"</span>+addtime+<span class="string">"' and DATE_FORMAT(ss2.addtime,'%Y-%m-%d') &lt;= '"</span>+addtime+<span class="string">"'"</span>);</span><br><span class="line">System.out.println(<span class="string">"addtime执行了"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">System.err.println(<span class="string">"sql:"</span>+sb.toString());</span><br><span class="line">SQLQuery sq=session.createSQLQuery(sb.toString()).addEntity(Supervisionsheet.class);</span><br><span class="line">sq.setFirstResult(begin).setMaxResults(pagesize);</span><br><span class="line"><span class="keyword">return</span> sq.list();</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li></ul>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;简单查询&quot;&gt;&lt;a href=&quot;#简单查询&quot; class=&quot;headerlink&quot; title=&quot;简单查询&quot;&gt;&lt;/a&gt;简单查询&lt;/h1&gt;&lt;ul&gt;
+&lt;li&gt;个人认为直接操作sql效率最高&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;select t1.* from table t1&lt;br&gt;left join table t2&lt;br&gt;on t1.t1与t2关联的主键=t2.主键&lt;br&gt;left join table t3 on&lt;br&gt;t2.t2与t3关联的主键=t3.主键&lt;br&gt;left join …&lt;br&gt;on …&lt;br&gt;WHERE 1=1&lt;br&gt;and xxxx and xxxx …&lt;br&gt;条件如果为string类型，则判断length是否大于0，来判断是否拼接&lt;/p&gt;&lt;/li&gt;&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="项目笔记" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>freemarker导出excel时office报错而wps不会</title>
+    <link href="http://yoursite.com/2019/07/10/freemarker%E5%AF%BC%E5%87%BAexcel%E6%97%B6office%E6%8A%A5%E9%94%99%E8%80%8Cwps%E4%B8%8D%E4%BC%9A/"/>
+    <id>http://yoursite.com/2019/07/10/freemarker导出excel时office报错而wps不会/</id>
+    <published>2019-07-10T02:09:50.000Z</published>
+    <updated>2019-07-10T02:27:57.017Z</updated>
+    
+    <content type="html"><![CDATA[<p>#导出体悟</p><ul><li>如果 ss:ExpandedRowCount 这边设置的行数值小于实际行数则报错，相应的 ss:ExpandedColumnCount  列数一样，可以通过传参设置大小（比如ss:ExpandedRowCount=”${dataList?size + 10}”）。</li><li><cell> 里头的 <data>设置类型时如果 百分比数据不小心设置成 ss:Type=”Number”，则会报错，改为String 可以解决。</data></cell></li><li>涉及到列合并时，行是动态增加的，此时合并列后面的那些列需要加上 ss:Index=””用于指定列的位置，否则会报错，比如这样子就是正常的</li><li><p>ss:ExpandedColumnCount=”” 这边设置的列数要跟<column>个数一至，否则会报错，比如这样子就是正常的</column></p></li><li><p>xml 代码结构大概是这样的：表头 + 内容 + 尾巴。</p></li><li><p>1、我用 notepad++ 打开 xlsx文件，之所以打的开 是因为是 ftl 格式的，只是名称改成 xlsx ，本质还是 xml 内容。</p></li><li><p>2、头尾之间的内容占了主要代码量，先从这边开始删。可以把循环去掉，只留1行，然后保存，接着分别用wps、office打开文件是否成功。</p></li><li><p>3、若第2步骤office依旧报错，说明问题不在删掉的代码，那么就接着删，比如删表头，删完后继续用wps、office打开文件，检测是否正常。</p></li><li><p>重复上面步骤，很快就能找到问题代码了，嗯，我是这么解决问题的。</p></li></ul><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;#导出体悟&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;如果 ss:ExpandedRowCount 这边设置的行数值小于实际行数则报错，相应的 ss:ExpandedColumnCount  列数一样，可以通过传参设置大小（比如ss:ExpandedRowCount=”${dataList?size + 10}”）。&lt;/li&gt;
+&lt;li&gt;&lt;cell&gt; 里头的 &lt;data&gt;设置类型时如果 百分比数据不小心设置成 ss:Type=”Number”，则会报错，改为String 可以解决。&lt;/data&gt;&lt;/cell&gt;&lt;/li&gt;
+&lt;li&gt;涉及到列合并时，行是动态增加的，此时合并列后面的那些列需要加上 ss:Index=””用于指定列的位置，否则会报错，比如这样子就是正常的&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;ss:ExpandedColumnCount=”” 这边设置的列数要跟&lt;column&gt;个数一至，否则会报错，比如这样子就是正常的&lt;/column&gt;&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;xml 代码结构大概是这样的：表头 + 内容 + 尾巴。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;1、我用 notepad++ 打开 xlsx文件，之所以打的开 是因为是 ftl 格式的，只是名称改成 xlsx ，本质还是 xml 内容。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;2、头尾之间的内容占了主要代码量，先从这边开始删。可以把循环去掉，只留1行，然后保存，接着分别用wps、office打开文件是否成功。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;3、若第2步骤office依旧报错，说明问题不在删掉的代码，那么就接着删，比如删表头，删完后继续用wps、office打开文件，检测是否正常。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;重复上面步骤，很快就能找到问题代码了，嗯，我是这么解决问题的。&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="项目笔记" scheme="http://yoursite.com/tags/%E9%A1%B9%E7%9B%AE%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
   
   <entry>
     <title>Collection和泛型</title>

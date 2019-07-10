@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="项目笔记," />
 
 
 
@@ -88,14 +88,18 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="分类">
-<meta property="og:url" content="http://yoursite.com/categories/index.html">
+<meta name="description" content="简单查询 个人认为直接操作sql效率最高 select t1.* from table t1left join table t2on t1.t1与t2关联的主键=t2.主键left join table t3 ont2.t2与t3关联的主键=t3.主键left join …on …WHERE 1=1and xxxx and xxxx …条件如果为string类型，则判断length是否大于0，来判">
+<meta name="keywords" content="项目笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="简单查询个人总结">
+<meta property="og:url" content="http://yoursite.com/2019/07/10/简单查询个人总结/index.html">
 <meta property="og:site_name" content="Venom">
+<meta property="og:description" content="简单查询 个人认为直接操作sql效率最高 select t1.* from table t1left join table t2on t1.t1与t2关联的主键=t2.主键left join table t3 ont2.t2与t3关联的主键=t3.主键left join …on …WHERE 1=1and xxxx and xxxx …条件如果为string类型，则判断length是否大于0，来判">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-11-11T12:46:17.905Z">
+<meta property="og:updated_time" content="2019-07-10T02:27:50.250Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="分类">
+<meta name="twitter:title" content="简单查询个人总结">
+<meta name="twitter:description" content="简单查询 个人认为直接操作sql效率最高 select t1.* from table t1left join table t2on t1.t1与t2关联的主键=t2.主键left join table t3 ont2.t2与t3关联的主键=t3.主键left join …on …WHERE 1=1and xxxx and xxxx …条件如果为string类型，则判断length是否大于0，来判">
 
 
 
@@ -125,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/categories/"/>
+  <link rel="canonical" href="http://yoursite.com/2019/07/10/简单查询个人总结/"/>
 
 
 
 
 
-  <title>分类 | Venom</title>
+  <title>简单查询个人总结 | Venom</title>
   
 
 
@@ -287,40 +291,189 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/简单查询个人总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 1 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/测试-Hexo/">测试 Hexo</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+          <h1 class="post-title" itemprop="name headline">简单查询个人总结</h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T10:15:31+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <h1 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h1><ul>
+<li>个人认为直接操作sql效率最高</li>
+<li><p>select t1.* from table t1<br>left join table t2<br>on t1.t1与t2关联的主键=t2.主键<br>left join table t3 on<br>t2.t2与t3关联的主键=t3.主键<br>left join …<br>on …<br>WHERE 1=1<br>and xxxx and xxxx …<br>条件如果为string类型，则判断length是否大于0，来判断是否拼接</p>
+<a id="more"></a>
+<h1 id="简单查询Demo"><a href="#简单查询Demo" class="headerlink" title="简单查询Demo"></a>简单查询Demo</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">	 * 督办单简单分页查询</span></span><br><span class="line"><span class="comment">	 *</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@param</span> findManyTable</span></span><br><span class="line"><span class="comment">	 * <span class="doctag">@return</span> 2019年7月4日 by 吴峰</span></span><br><span class="line"><span class="comment">	 */</span></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> List <span class="title">findManyTable</span><span class="params">(<span class="keyword">final</span> String supervisionno ,<span class="keyword">final</span> String realname ,<span class="keyword">final</span> String projectname,<span class="keyword">final</span> String addtime,<span class="keyword">final</span> Integer begin,<span class="keyword">final</span> Integer pagesize)</span></span>&#123;</span><br><span class="line">		<span class="comment">/*,final Timestamp addtime*/</span></span><br><span class="line">		<span class="keyword">return</span> <span class="keyword">this</span>.getHibernateTemplate().execute(</span><br><span class="line">				<span class="keyword">new</span> HibernateCallback&lt;List&gt;() &#123;</span><br><span class="line">					<span class="meta">@Override</span></span><br><span class="line">					<span class="function"><span class="keyword">public</span> List <span class="title">doInHibernate</span><span class="params">(Session session)</span> <span class="keyword">throws</span> HibernateException </span>&#123;		</span><br><span class="line">						StringBuffer sb=<span class="keyword">new</span> StringBuffer();</span><br><span class="line">						sb.append(<span class="string">"select ss.* from supervisionsheet ss"</span></span><br><span class="line">						+<span class="string">" left join projects pj"</span></span><br><span class="line">						+<span class="string">" on pj.projectid=ss.supervisionproject_projectid"</span></span><br><span class="line">						+<span class="string">" left join user us"</span></span><br><span class="line">						+<span class="string">" on  us.userid=ss.addsupervisionuser_userid"</span></span><br><span class="line">						+<span class="string">" left join supervisionsheet ss1"</span></span><br><span class="line">						+<span class="string">" on ss.supervisionid=ss1.supervisionid"</span></span><br><span class="line">						+<span class="string">" left join supervisionsheet ss2"</span></span><br><span class="line">						+<span class="string">" on ss.supervisionid=ss2.supervisionid"</span>						</span><br><span class="line">						+<span class="string">" where 1=1"</span>);</span><br><span class="line">						<span class="keyword">if</span>(projectname.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">							sb.append(<span class="string">" and pj.projectname='"</span>+projectname+<span class="string">"'"</span>);</span><br><span class="line">							System.out.println(<span class="string">"projectname执行了"</span>);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">if</span>(realname.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">							sb.append(<span class="string">" and us.realname='"</span>+realname+<span class="string">"'"</span>);</span><br><span class="line">							System.out.println(<span class="string">"realname执行了"</span>);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">if</span>(supervisionno.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">							sb.append(<span class="string">" and ss1.supervisionno='"</span>+supervisionno+<span class="string">"'"</span>);</span><br><span class="line">							System.out.println(<span class="string">"num执行了"</span>);</span><br><span class="line">						&#125;</span><br><span class="line">						<span class="keyword">if</span>(addtime.length()&gt;<span class="number">0</span>)&#123;</span><br><span class="line">							sb.append(<span class="string">" and DATE_FORMAT(ss2.addtime,'%Y-%m-%d') &gt;= '"</span>+addtime+<span class="string">"' and DATE_FORMAT(ss2.addtime,'%Y-%m-%d') &lt;= '"</span>+addtime+<span class="string">"'"</span>);</span><br><span class="line">							System.out.println(<span class="string">"addtime执行了"</span>);</span><br><span class="line">						&#125;					</span><br><span class="line"></span><br><span class="line">						System.err.println(<span class="string">"sql:"</span>+sb.toString());</span><br><span class="line">						SQLQuery sq=session.createSQLQuery(sb.toString()).addEntity(Supervisionsheet.class);												</span><br><span class="line">						sq.setFirstResult(begin).setMaxResults(pagesize);</span><br><span class="line">						<span class="keyword">return</span> sq.list();																		</span><br><span class="line">					&#125;		</span><br><span class="line">				&#125;</span><br><span class="line">		);		</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+
       
     </div>
     
     
     
+
+    
+    <div>
+          
+            
+
+          
+    </div>
+      <div>
+        <div id="wechat_subscriber" style="display: block; padding: 10px 0; margin: 20px auto; width: 100%; text-align: center">
+    <img id="wechat_subscriber_qcode" src="https://ws1.sinaimg.cn/large/006qi2MKly1fx5ke9n2uqj30fz0jsdlm.jpg" alt="Nice-大胖狗 wechat" style="width: 200px; max-width: 100%;"/>
+    <div>时光船的朋友你们好：我是船长 有生之年想和你一起看看这个美丽破碎的世界。时光船的宝贝们，你们还有什么故事没有说出口吗？你们还有什么故事埋藏在心底吗？在时光船上，让我们一起穿梭现在和未来，聆听你我真是的内心。</div>
+</div>
+
+      </div>
+    
+
+    
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>坚持原创技术分享，您的支持将鼓励我继续创作！</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>打赏</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechatpay.png" alt="Nice-大胖狗 微信支付"/>
+        <p>微信支付</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/项目笔记/" rel="tag"><i class="fa fa-google"></i>
+
+ 项目笔记</a>
+          
+        </div>
+      
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/freemarker导出excel时office报错而wps不会/" rel="next" title="freemarker导出excel时office报错而wps不会">
+                <i class="fa fa-chevron-left"></i> freemarker导出excel时office报错而wps不会
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -353,8 +506,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -462,6 +624,21 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简单查询"><span class="nav-number">1.</span> <span class="nav-text">简单查询</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#简单查询Demo"><span class="nav-number">2.</span> <span class="nav-text">简单查询Demo</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

@@ -299,6 +299,271 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/简单查询个人总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/10/简单查询个人总结/" itemprop="url">简单查询个人总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T10:15:31+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="简单查询"><a href="#简单查询" class="headerlink" title="简单查询"></a>简单查询</h1><ul>
+<li>个人认为直接操作sql效率最高</li>
+<li><p>select t1.* from table t1<br>left join table t2<br>on t1.t1与t2关联的主键=t2.主键<br>left join table t3 on<br>t2.t2与t3关联的主键=t3.主键<br>left join …<br>on …<br>WHERE 1=1<br>and xxxx and xxxx …<br>条件如果为string类型，则判断length是否大于0，来判断是否拼接</p></li></ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/10/简单查询个人总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/freemarker导出excel时office报错而wps不会/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/07/10/freemarker导出excel时office报错而wps不会/" itemprop="url">freemarker导出excel时office报错而wps不会</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T10:09:50+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>#导出体悟</p>
+<ul>
+<li>如果 ss:ExpandedRowCount 这边设置的行数值小于实际行数则报错，相应的 ss:ExpandedColumnCount  列数一样，可以通过传参设置大小（比如ss:ExpandedRowCount=”${dataList?size + 10}”）。</li>
+<li><cell> 里头的 <data>设置类型时如果 百分比数据不小心设置成 ss:Type=”Number”，则会报错，改为String 可以解决。</data></cell></li>
+<li>涉及到列合并时，行是动态增加的，此时合并列后面的那些列需要加上 ss:Index=””用于指定列的位置，否则会报错，比如这样子就是正常的</li>
+<li><p>ss:ExpandedColumnCount=”” 这边设置的列数要跟<column>个数一至，否则会报错，比如这样子就是正常的</column></p>
+</li>
+<li><p>xml 代码结构大概是这样的：表头 + 内容 + 尾巴。</p>
+</li>
+<li><p>1、我用 notepad++ 打开 xlsx文件，之所以打的开 是因为是 ftl 格式的，只是名称改成 xlsx ，本质还是 xml 内容。</p>
+</li>
+<li><p>2、头尾之间的内容占了主要代码量，先从这边开始删。可以把循环去掉，只留1行，然后保存，接着分别用wps、office打开文件是否成功。</p>
+</li>
+<li><p>3、若第2步骤office依旧报错，说明问题不在删掉的代码，那么就接着删，比如删表头，删完后继续用wps、office打开文件，检测是否正常。</p>
+</li>
+<li><p>重复上面步骤，很快就能找到问题代码了，嗯，我是这么解决问题的。</p>
+</li>
+</ul>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/10/freemarker导出excel时office报错而wps不会/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/04/09/Collection和泛型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1742,7 +2007,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">5</span>
+                  <span class="site-state-item-count">7</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1764,7 +2029,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -1870,7 +2135,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共16.5k字</span>
+  <span class="post-count">博客全站共17.2k字</span>
 </div>
 
         
