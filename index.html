@@ -299,6 +299,430 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/02/18/记一次HashMap和ConcurrentHashMa的p源码读后感/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/02/18/记一次HashMap和ConcurrentHashMa的p源码读后感/" itemprop="url">记一次HashMap和ConcurrentHashMa的p源码读后感</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-02-18T13:56:42+08:00">
+                2020-02-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>###关于HashMap和ConcurrentHashMap的一些理解</p>
+<p>1：HashMap<br>2：</p>
+<ul>
+<li>HashMap的底层数据结构在1.7时是数组+链表，在1.8时是数组+链表+红黑树。</li>
+<li><p>jdk7中数组初始容量是10，每次扩容为原来的2倍，ArrayList中是1.5倍。</p>
+</li>
+<li><p>为什么每次扩容是2的幂次方？<br>  是因为只有当他是2的n次方时，我们才能通过indexFor（）方法对它减1操作后拿到全部是1的二进制值并与<br>计算出来的hashcode进行按位与，根据按位与的原则 1111 &amp; hashcode 的结果符合设计者的均匀分布目的<br>如果不是2的幂次假如是17，那么程序会通过roundUpToPower（）方法对他进行向上求2的幂也就是32，首先<br>初始容量会变大，可能影响性能，然后就是17的话是10001 &amp; hashcode （1011，1111，1101）这些hashcode<br>值的结果都是0001，这样的结果明显不符合设计初衷即散列均匀。 同样的情况下，对比1111 &amp; （1011，1111<br>，1101）结果是三个不同的位置，即减少了哈希碰撞的概率。</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> * Returns a power of two size for the given target capacity.</span><br><span class="line"> */</span><br><span class="line">static final int tableSizeFor(int cap) &#123;</span><br><span class="line">    int n = cap - 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 1;</span><br><span class="line">    n |= n &gt;&gt;&gt; 2;</span><br><span class="line">    n |= n &gt;&gt;&gt; 4;</span><br><span class="line">    n |= n &gt;&gt;&gt; 8;</span><br><span class="line">    n |= n &gt;&gt;&gt; 16;</span><br><span class="line">    return (n &lt; 0) ? 1 : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + 1;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>jdk8中的1为什么要使用红黑树？<br>当元素的个数小于一个阈值的时候，使用链表的插入和的查询效率要高于红黑树，而当元素个数大于这个阈值的<br>时候，使用红黑树的插入和查询效率要高，此阈值在1中是8.</li>
+<li><p>jdk8中的1什么时候转化为红黑树？<br>当链表中元素个数大于阈值8时，且数组的长度大于等于64时，才会将链表转化为红黑树，如果数组长度达不到<br>要求，就会通过扩容来缩短链表的长度。</p>
+</li>
+<li><p>jdk8中1的put方法的实现过程？<br>①: 根据key计算hashcode值<br>②: 判断当前1对象中数组是否为空，如果为空则先初始化该数组<br>③: 根据逻辑与运算，算出hashcode基于当前数组的下标i<br>④：判断数组中第i个位置上的元素table[i]是否为空<br>a：如果为空，则将key，value封装成node对象赋值给table[i]<br>b：如果不为空则要进行进一步的判断<br>  i:如果put方法传进来的key等于table[i].key，那么证明此时1中有相同的key<br> ii:如果不等于，则：</p>
+<pre><code>1:如果table[i]的类型是TreeNode，则表示数组在第i个位置上是挂了一个红黑树，那么此时要先判断
+红黑树中是否存在相同的key，如果不存在，就将key和value封装成一个treenode对象插入到红黑树中
+2:如果table[i]的类型不是TreeNode，则表示数组在第i个位置上是挂了一个链表，那么此时要先遍历
+一遍链表寻找是否存在相同的key，并且在链表遍历的过程中，会对链表的节点个数进行计数，当遍历到
+最后一个节点时，还没找到的话，就直接将key和value封装Node插入到链表的尾部，之所以计数，是为
+了提供一个链表树化的条件即链表的长度是否大于阈值8，如果大于阈值8，且此时数组的长度已经大于或
+等于64了，则调用TreeBin方法将链表改为红黑树结构。
+</code></pre><p>iii:如果上述过程中发现存在相同的key，则根据onlyifAbsent标记来判断是否需要更新这个key的value，</p>
+<pre><code>如果true，则更新这个value并返回oldValue，如果不是，即什么都不做！！
+</code></pre><p>⑤：modCount++；<br>⑥：HashMap的元素个数即size+1；<br>⑦：如果size大于扩容的阈值，则进行扩容操作</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><span class="line">//构造方法代用putVal（）</span><br><span class="line">public V put(K key, V value) &#123;</span><br><span class="line">    return putVal(hash(key), key, value, false, true);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final V putVal(int hash, K key, V value, boolean onlyIfAbsent,</span><br><span class="line">               boolean evict) &#123;</span><br><span class="line"></span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; int n, i;</span><br><span class="line"></span><br><span class="line">    if ((tab = table) == null || (n = tab.length) == 0)</span><br><span class="line">         //如果table尚未初始化，则此处进行初始化数组，并赋值初始容量，重新计算阈值</span><br><span class="line">        n = (tab = resize()).length;</span><br><span class="line">    if ((p = tab[i = (n - 1) &amp; hash]) == null)</span><br><span class="line">        //通过计算hashcode值找到下标，如果hash值指定的位置数据为空，则直接将数据存放进去</span><br><span class="line">        tab[i] = newNode(hash, key, value, null);</span><br><span class="line">    else &#123;</span><br><span class="line">        //如果通过hash找到的位置有数据，发生碰撞</span><br><span class="line">        Node&lt;K,V&gt; e; K k;</span><br><span class="line"></span><br><span class="line">        if (p.hash == hash &amp;&amp;</span><br><span class="line">            ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            //如果需要插入的key和当前hash值指定下标的key一样，先将e数组中已有的数据</span><br><span class="line">            e = p;</span><br><span class="line"></span><br><span class="line">        else if (p instanceof TreeNode)</span><br><span class="line">            //如果此时桶中数据类型为 treeNode，使用红黑树进行插入</span><br><span class="line">            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(this, tab, hash, key, value);</span><br><span class="line"></span><br><span class="line">        else &#123;</span><br><span class="line">            //此时桶中数据类型为链表</span><br><span class="line">            // 进行循环遍历并计数</span><br><span class="line">            for (int binCount = 0; ; ++binCount) &#123;</span><br><span class="line">                if ((e = p.next) == null) &#123;</span><br><span class="line">                    //如果链表中没有最新插入的节点，将新放入的数据放到链表的末尾</span><br><span class="line">                    p.next = newNode(hash, key, value, null);</span><br><span class="line"></span><br><span class="line">                    //如果链表过长，达到树化阈值，将链表转化成红黑树</span><br><span class="line">                    if (binCount &gt;= TREEIFY_THRESHOLD - 1) // -1 for 1st</span><br><span class="line">                        treeifyBin(tab, hash);</span><br><span class="line">                    break;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">                //如果链表中有新插入的节点位置数据不为空，则此时e 赋值为节点的值，跳出循环</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    break;</span><br><span class="line">                p = e;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        //经过上面的循环后，如果e不为空，则说明上面插入的值已经存在于当前的hashMap中，</span><br><span class="line">        //那么更新指定位置的键值对</span><br><span class="line">        if (e != null) &#123; // existing mapping for key</span><br><span class="line">            V oldValue = e.value;</span><br><span class="line">            if (!onlyIfAbsent || oldValue == null)</span><br><span class="line">                e.value = value;</span><br><span class="line">            afterNodeAccess(e);</span><br><span class="line">            return oldValue;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    ++modCount;</span><br><span class="line">    //如果此时hashMap size大于阈值，则进行扩容</span><br><span class="line">    if (++size &gt; threshold)</span><br><span class="line">        resize();</span><br><span class="line">    afterNodeInsertion(evict);</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>jdk8中1的get方法的实现过程？<br>①：根据key计算hashcode值<br>②：如果数组为空，直接返回空<br>③：如果数组的第i个位置上没有元素，则直接返回空<br>④：如果数组中的第i个位置的key等于get方法传进来的key，则直接返回该元素，并获取该元素的value<br>⑤：如果不等于，那么要判断这个元素下面是否还有元素，如果没有，则直接返回为空<br>⑥：如果有则判断该元素的类型是TreeNode还是Node，前者的话需要遍历一个长度为8的链表，反之则要<br>   遍历红黑树<br>⑦：找到即返回元素，找不到就返回空。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">public V get(Object key) &#123;</span><br><span class="line">    Node&lt;K,V&gt; e;</span><br><span class="line">    return (e = getNode(hash(key), key)) == null ? null : e.value;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">final Node&lt;K,V&gt; getNode(int hash, Object key) &#123;</span><br><span class="line">    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; first, e; int n; K k;</span><br><span class="line"></span><br><span class="line">    if ((tab = table) != null &amp;&amp; (n = tab.length) &gt; 0 &amp;&amp;</span><br><span class="line">        (first = tab[(n - 1) &amp; hash]) != null) &#123;</span><br><span class="line"></span><br><span class="line">        //1、根据hash算法找到对应位置的第一个数据，如果是指定的key，则直接返回</span><br><span class="line">        if (first.hash == hash &amp;&amp;</span><br><span class="line">            ((k = first.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">            return first;</span><br><span class="line"></span><br><span class="line">        if ((e = first.next) != null) &#123;</span><br><span class="line">            //如果该节点为红黑树，则通过树进行查找</span><br><span class="line">            if (first instanceof TreeNode)</span><br><span class="line">                return ((TreeNode&lt;K,V&gt;)first).getTreeNode(hash, key);</span><br><span class="line">            //如果该节点是链表，则遍历查找到数据</span><br><span class="line">            do &#123;</span><br><span class="line">                if (e.hash == hash &amp;&amp;</span><br><span class="line">                    ((k = e.key) == key || (key != null &amp;&amp; key.equals(k))))</span><br><span class="line">                    return e;</span><br><span class="line">            &#125; while ((e = e.next) != null);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>jdk7和jdk8中的1的不同点？<br>①：最明显的是，jdk8中加入了红黑树的实现<br>②：jdk7中的链表插入使用了头插法，由于我们知道在链表头添加元素的时间复杂度是O(1)级别的，因此<br>使用头插法效率会高，但是在多线程扩容的情况下会出现链表死循环的问题，导致cpu飙升，jdk8中链表<br>使用的是尾插法（虽然我们都知道尾插法的时间复杂度是O(n)级别的，但是我们要知道jdk1.8中的1在put<br>的时候是一边遍历链表一边对比元素的key的，因此直接使用尾插法只能算是顺带吧！）<br>③：jdk7的hash算法明显要比jdk8的更复杂一些，我们都知道hash算法越复杂，生成的hashcode越散列，<br>那么1中的元素就更加散列即更加均匀分布。（这主要是因为链表的查询复杂度是O(n)级别的，而1.7中又<br>没有红黑树，因此只能通过优化hash算法来达到均匀分布的目的）jdk1.8中因为引入了红黑树这种查找性能<br>为O(logn)级别的数据结构，所以查询性能得到了保障，可以简化hash算法（毕竟hash算法越复杂，就越消<br>耗CPU）<br>④：扩容的过程中jdk7可能会重新对key进行hash（即rehash，这个操作的判断条件是跟hashseed有关），<br>jdk8中没有这部分逻辑<br>⑤：jdk8中的扩容条件和jdk7不一样，除开判断size是否大于阈值之外，jdk7中还判断了table[i]是否为空<br>即不为空的情况下才进行扩容，而jdk8中则没有该判断条件。<br>⑥：jdk8中还多了一个api：putifabsent（key，value）<br>⑦：jdk7和jdk扩容过程中转移元素的逻辑不一样，jdk7是每次转移一个元素（判断是否需要rehash），jdk8中<br>链表实现算出来当前位置上哪些元素在新数组的low位哪些实在high位，然后将低位的一次性进行转移，高位亦如此。</p>
+</li>
+<li><p>为什么jdk1.8中红黑树的阈值是8？<br>Because TreeNodes are about twice the size of regular nodes, we<br>use them only when bins contain enough nodes to warrant use<br>(see TREEIFY_THRESHOLD). And when they become too small (due to<br>removal or resizing) they are converted back to plain bins.  In<br>usages with well-distributed user hashCodes, tree bins are<br>rarely used.  Ideally, under random hashCodes, the frequency of<br>nodes in bins follows a Poisson distribution<br>(<a href="http://en.wikipedia.org/wiki/Poisson_distribution" target="_blank" rel="noopener">http://en.wikipedia.org/wiki/Poisson_distribution</a>) with a<br>parameter of about 0.5 on average for the default resizing<br>threshold of 0.75, although with a large variance because of<br>resizing granularity. Ignoring variance, the expected<br>occurrences of list size k are <figure class="highlight plain"><figcaption><span>k)/factorial(k)).```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">  0:    0.60653066</span><br><span class="line">  1:    0.30326533</span><br><span class="line">  2:    0.07581633</span><br><span class="line">  3:    0.01263606</span><br><span class="line">  4:    0.00157952</span><br><span class="line">  5:    0.00015795</span><br><span class="line">  6:    0.00001316</span><br><span class="line">  7:    0.00000094</span><br><span class="line">  8:    0.00000006</span><br><span class="line">more: less than 1 in ten million</span><br><span class="line"></span><br><span class="line">人工翻译来就是：TreeNodes占用空间是普通Nodes的两倍，所以只有当bin包含足够多的节点时才会</span><br><span class="line">转成TreeNodes，而是否足够多就是由TREEIFY_THRESHOLD的值决定的。当bin中节点数变少时，又会</span><br><span class="line">转成普通的bin。当hashCode离散性很好的时候，树型bin用到的概率非常小，因为数据均匀分布在每个</span><br><span class="line">bin中，几乎不会有bin中链表长度会达到阈值。但是在随机hashCode下，离散性可能会变差，然而JDK</span><br><span class="line">又不能阻止用户实现这种不好的hash算法，因此就可能导致不均匀的数据分布。不过理想情况下随机</span><br><span class="line">hashCode算法下所有bin中节点的分布频率会遵循一个0.5的泊松分布（在这个分布里，一个桶里有</span><br><span class="line">8个元素的概率是8x10^-8次方，这个概率已经很小了，而一个桶里超过8个元素的概率就更小了，因此</span><br><span class="line">考虑时间和空间的复杂度，才将8设为转变为红黑树的阈值）</span><br><span class="line"></span><br><span class="line">- 负载因子为什么是0.75f，不是0.5或者1？（为啥不是0.6或0.8呢反正就是杠精的问你（比如你的面试官是</span><br><span class="line">  风灯兄弟））</span><br><span class="line"></span><br><span class="line">  1.如果是0.5 ， 那么每次达到容量的一半就进行扩容，默认容量是16， 达到8就扩容成32，达到16就扩容成</span><br><span class="line">  64最终使用空间和未使用空间的差值会逐渐增加，空间利用率低下。 如果是1，那意味着每次空间使用完毕才</span><br><span class="line">  扩容，在一定程度上会增加put时候的时间。</span><br><span class="line">  2.其实HashMap的作者在源码中给了解释如下：</span><br></pre></td></tr></table></figure></p>
+<p>jdk1.7中：<br>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs. Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the HashMap class, including get and put). The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of rehash operations. If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>jdk1.8中对负载因子这一块的补充说明：<br>Ideally, under random hashCodes, the frequency of nodes in bins follows a Poisson distribution with a parameter of about 0.5 on average for the default resizing threshold of 0.75, although with a large variance because of resizing granularity. Ignoring variance, the expected occurrences of list size k are (exp(-0.5) pow(0.5, k) / factorial(k)). The first values are:</p>
+<pre><code>0:    0.60653066
+1:    0.30326533
+2:    0.07581633
+3:    0.01263606
+4:    0.00157952
+5:    0.00015795
+6:    0.00001316
+7:    0.00000094
+8:    0.00000006
+</code></pre><p><code>`</code><br>说人话就是：作为一般规则，默认负载因子（0.75）在时间和空间成本上提供了很好的折衷。较高的值会降低空间开销，但提高查找成本（体现在大多数的HashMap类的操作，包括get和put）。设置初始大小时，应该考虑预计的entry数在map及其负载系数，并且尽量减少rehash操作的次数。如果初始容量大于最大条目数除以负载因子，rehash操作将不会发生。<br>理想状态下，在随机哈希值的情况，对于loadfactor = 0.75 ，虽然由于粒度调整会产生较大的方差，桶中的Node的分布频率服从参数为0.5的泊松分布。 （本质就是即保证了一定的性能，又增加散列性，使得每个元素分布均匀）<br>拓展几个问题！</p>
+</li>
+<li><p>解决hash冲突的方案？<br>1.链地址法？<br>2.线性探测法，平方探测法？讲讲是怎么样实现的？<br>3.布谷鸟散列（我是不知道这什么gui）</p>
+</li>
+<li><p>HashMap是浅拷贝，说一下浅拷贝和深拷贝的区别？</p>
+</li>
+<li>说一说HashMap如何实现有序（LinkedHashMap，TreeMap）以及他们的差别（性能，数据结构）</li>
+<li><p>引入ConcurrentHashMap的原理？</p>
+</li>
+<li><p>jdk7中的ConcurrentHashMap是怎么保证并发安全的？<br>主要利用Unsafe操作+ReentrantLock+分段思想<br>Unsafe：compareAndSwap（CAS原则）</p>
+<pre><code>putOrderedObject：并发安全的给数组某个位置赋值
+getObjectVolatile：并发安全的获取数组某个位置的元素
+</code></pre><p>分段是为了提高ConcurrentHashMap的并发量，分段数越高则支持的最大并发量就越高，我们可以<br>通过指定concurrencyLevel的参数的值来指定并发量。ConcurrentHashMap的内部类Segment就是<br>用来表示分段的。<br>每个Semgent就是一个小型的HashMap，当调用put方法时，最终会调用Segment的put方法，而Segment<br>类继承了ReentrantLock，即自带可重入锁，当调用put方法的时候，会先利用可重入锁进行加锁，然后<br>将带插入的key，value插入到这个小型的HashMap中，插入完成后解锁。这里结合ReentrantLock的性质<br>可以加深理解（问题来了！！说说你了解的ReentrantLock？？）。</p>
+</li>
+<li><p>jdk7中ConcurrentHashMap底层原理？<br>ConcurrentHashMap底层是由两层嵌套数组（Segment[]和HashEntry[]）<br>Segment[]:ConcurrentHashMap对象中有一个属性：Segments，类型为Segment[]<br>HashEntry[]：Segment对象中有一个属性table，类型为HashEntry[]<br>未完，还不是很懂。</p>
+</li>
+<li><p>jdk8中的ConcurrentHashMap是怎么保证并发安全的？<br>Unsafe操作+sync关键字<br>Unsafe操作的使用仍然是负责并发安全的修改对象的属性或数组的某个位置的值<br>sync主要负责在需要操作的位置进行加锁（这里估计会问sync在1.8做了哪些优化，为什么不用Reentrantlock）</p>
+</li>
+<li><p>jdk8中其实仍有分段这个概念，只不过被coder强制规定为一个位置一把锁。<br>ConcurrentHashMap中put流程<br>1.首先计算key对应的数组下标i，如果table[i]没有元素通过自旋的方式去向该位置赋值<br>2.如果该位置有元素，则sync会加锁，此时在该位置上的其他操作就需要自选等待<br>3.加锁成功后，判断元素类型（node or treenode）<br>4.添加成功后，判断此时的cap是否&gt;=4,node是否&gt;8(即判断要不要树化)<br>5.addCount,即size+1，不过这个方法也是需要控制并发安全的，在+1成功后，还需要判断cap*lodefactor与size的大小关系，即要不要扩容。<br>6.如果此时一个线程在put时发现当前ConcurrentHashMap正在扩容则会去帮助其扩容（这里会问如何扩容？）</p>
+</li>
+<li>7和8中ConcurrentHashMap的不同点<br>1.主要是舍弃了Segment[]的设计<br>2.8支持多线程扩容<br>3.个数统计的实现不同</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/11/简历/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/01/11/简历/" itemprop="url">简历</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-01-11T23:33:24+08:00">
+                2020-01-11
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/07/松果出行1面/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Nice-大胖狗">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="https://ws1.sinaimg.cn/large/006qi2MKly1fx4fm5kz2fj30go0lzace.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Venom">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/12/07/松果出行1面/" itemprop="url">松果出行1面</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-07T17:12:44+08:00">
+                2019-12-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/10/简单查询个人总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2007,7 +2431,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-count">10</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -2029,7 +2453,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -2111,7 +2535,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
@@ -2135,7 +2559,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共17.2k字</span>
+  <span class="post-count">博客全站共21.4k字</span>
 </div>
 
         
